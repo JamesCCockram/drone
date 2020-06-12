@@ -1,0 +1,22 @@
+{
+  "name": "drone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesCCockram/drone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesCCockram/drone/issues"
+  },
+  "homepage": "https://github.com/JamesCCockram/drone#readme",
+  "dependencies": {
+    "ar-drone": "^0.3.3"
+  }
+}
