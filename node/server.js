@@ -5,14 +5,18 @@ const port = 3000
 var arDrone = require('ar-drone');
 var client = arDrone.createClient();
 
+//Make drone takeoff
 app.get('/takeoff', function(req, res){
   client.takeoff()
 })
 
+//Make drone land
 app.get('/land', function(req, res){
   client.land()
 })
 
+
+//Start ExpressJS server
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 
 
@@ -31,4 +35,5 @@ parser
     output.end();
   });
 
-video.pipe(parser);*/
+video.pipe(parser);
+*/
