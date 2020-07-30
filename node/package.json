@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/JamesCCockram/drone#readme",
   "dependencies": {
-    "ar-drone": "^0.3.3"
+    "ar-drone": "^0.3.3",
+    "express": "^4.17.1"
   }
 }
