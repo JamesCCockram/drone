@@ -11,7 +11,7 @@ ap.add_argument("-v", "--video", help=cap)
 args = vars(ap.parse_args())
 
 # load the video
-camera = cv2.VideoCapture('../node/output.mp4')
+camera = cv2.VideoCapture('tcp://192.168.1.1:5555')
 
 # keep looping
 while True:
