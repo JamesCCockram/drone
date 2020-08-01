@@ -9,7 +9,7 @@ import cv2
 #args = vars(ap.parse_args())
 #load the image
 #image = cv2.imread(args["image"])
-cap = cv2.VideoCapture(../node/vid.h264)
+cap = cv2.VideoCapture('../node/vid.h264')
 
 #loop over the boundaries
 while True:
