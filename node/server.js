@@ -8,11 +8,13 @@ var client = arDrone.createClient();
 //Make drone takeoff
 app.get('/takeoff', function(req, res){
   client.takeoff()
+  res.send('Drone has Taken Off!')
 })
 
 //Make drone land
 app.get('/land', function(req, res){
   client.land()
+  res.send('Drone has Landed!')
 })
 
 
