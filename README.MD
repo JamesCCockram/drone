@@ -13,5 +13,6 @@ To run this project you will need the following dependencies:
 * Flask
 * OpenCV
 * NumPy
+* Requests
 
 ## Running the Project

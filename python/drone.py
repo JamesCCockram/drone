@@ -25,7 +25,4 @@ def down():
     requests.get('http://localhost:3000/down')
 
 def stop():
-    requests.get('http://localhost:3000/stop') 
-
-takeoff()
-land()
+    requests.get('http://localhost:3000/stop')
