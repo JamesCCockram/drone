@@ -1,28 +1,37 @@
 import requests
 
 def takeoff():
-    requests.get('http://localhost:3000/takeoff')
+    r = requests.get('http://localhost:3000/takeoff')
+    print(r.text)
 
 def land():
-    requests.get('http://localhost:3000/land')
+    r = requests.get('http://localhost:3000/land')
+    print(r.text)
 
 def left():
-    requests.get('http://localhost:3000/left')
+    r = requests.get('http://localhost:3000/left')
+    print(r.text)
 
 def right():
-    requests.get('http://localhost:3000/right')
+    r = requests.get('http://localhost:3000/right')
+    print(r.text)
 
 def forward():
-    requests.get('http://localhost:3000/forward')
+    r = requests.get('http://localhost:3000/forward')
+    print(r.text)
 
 def back():
-    requests.get('http://localhost:3000/back')
+    r = requests.get('http://localhost:3000/back')
+    print(r.text)
 
 def up():
-    requests.get('http://localhost:3000/up')
+    r = requests.get('http://localhost:3000/up')
+    print(r.text)
 
 def down():
-    requests.get('http://localhost:3000/down')
+    r = requests.get('http://localhost:3000/down')
+    print(r.text)
 
 def stop():
-    requests.get('http://localhost:3000/stop')
+    r = requests.get('http://localhost:3000/stop')
+    print(r.text)
