@@ -1,5 +1,5 @@
 import drone
-import squareIdentifaction as AI
+import squareIdentification as AI
 import time
 
-
+AI.findSquare()
