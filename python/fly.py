@@ -10,6 +10,18 @@ from multiprocessing.pool import ThreadPool
 
 pool = ThreadPool(processes=2)
 
+def preview():
+    camera = cv2.VideoCapture(0)
+    while True:
+        (grabbed, frame) = camera.read()
+        if not grabbed:
+            break
+        cv2.imshow("Preview", frame)
+        key = cv2.waitKey(1) & 0xFF
+        # if the 'q' key is pressed, stop the loop
+        if key == ord("q"):
+            break
+
 def flyDrone(found):
     if found:
         return True
