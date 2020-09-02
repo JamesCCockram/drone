@@ -17,21 +17,13 @@ def flyDrone(found):
         return False
 
 def detectImage():
-    cap = cv2.VideoCapture(0)
-
-    # construct the argument parse and parse the arguments
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-v", "--video", help=cap)
-    args = vars(ap.parse_args())
-
     # load the video
     camera = cv2.VideoCapture(0)
 
-    # keep looping
-    #while True:
     # grab the current frame and initialize the status text
     (grabbed, frame) = camera.read()
     status = "No Targets"
+    found = False
     # check to see if we have reached the end of the video
     if not grabbed:
         return
@@ -65,11 +57,13 @@ def detectImage():
                 # draw an outline around the target and update the status text
                 cv2.drawContours(frame, [approx], -1, (0, 0, 255), 4)
                 status = "Target(s) Acquired"
+                found = True
                  # compute the center of the contour region and draw the crosshairs
                 M = cv2.moments(approx)
                 #Center of object
                 (cX, cY) = (int(M["m10"] // M["m00"]), int(M["m01"] // M["m00"]))
                 return True
+    return found
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
