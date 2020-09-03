@@ -6,6 +6,7 @@ import argparse
 import cv2
 import imutils
 import random
+import commands as fly
 from multiprocessing.pool import ThreadPool
 
 pool = ThreadPool(processes=2)
@@ -23,19 +24,18 @@ def preview():
             break
 
 def flyDrone(found):
-    if found:
+    if found == True:
         return True
     else:
         return False
 
-def detectImage():
+def detectImage(camera, found):
     # load the video
-    camera = cv2.VideoCapture(0)
+    # camera = cv2.VideoCapture(0)
 
     # grab the current frame and initialize the status text
     (grabbed, frame) = camera.read()
     status = "No Targets"
-    found = False
     # check to see if we have reached the end of the video
     if not grabbed:
         return
@@ -74,17 +74,20 @@ def detectImage():
                 M = cv2.moments(approx)
                 #Center of object
                 (cX, cY) = (int(M["m10"] // M["m00"]), int(M["m01"] // M["m00"]))
-                return True
     return found
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
     logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
     found = False
-    while found == False:
+    camera = cv2.VideoCapture(0)
+    fly.takeoff()
+    # preview()
+    while True:
         print("Flying...")
-        async_detect = pool.apply_async(detectImage)
+        async_detect = pool.apply_async(detectImage,(camera,found))
         rv = async_detect.get()
+        print(found)
         async_fly = pool.apply_async(flyDrone,(rv,))
         found = async_fly.get()
     print("Stopped...")
