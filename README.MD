@@ -10,7 +10,6 @@ To run this project you will need the following dependencies:
 * ExpressJS
 * AR-Drone
 ### Python
-* Flask
 * OpenCV
 * NumPy
 * Requests
