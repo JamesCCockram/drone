@@ -30,12 +30,10 @@ def flyDrone(found):
         return False
 
 def detectImage(camera, found):
-    # load the video
-    # camera = cv2.VideoCapture(0)
-
     # grab the current frame and initialize the status text
     (grabbed, frame) = camera.read()
     status = "No Targets"
+    found = False
     # check to see if we have reached the end of the video
     if not grabbed:
         return
@@ -74,6 +72,7 @@ def detectImage(camera, found):
                 M = cv2.moments(approx)
                 #Center of object
                 (cX, cY) = (int(M["m10"] // M["m00"]), int(M["m01"] // M["m00"]))
+                print(cX, cY)
     return found
 
 if __name__ == "__main__":
@@ -81,13 +80,14 @@ if __name__ == "__main__":
     logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
     found = False
     camera = cv2.VideoCapture(0)
-    fly.takeoff()
+    # fly.takeoff()
     # preview()
     while True:
         print("Flying...")
         async_detect = pool.apply_async(detectImage,(camera,found))
         rv = async_detect.get()
-        print(found)
+        print("Found:", found)
+
         async_fly = pool.apply_async(flyDrone,(rv,))
         found = async_fly.get()
     print("Stopped...")
