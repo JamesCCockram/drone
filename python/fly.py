@@ -8,31 +8,31 @@ import imutils
 import random
 import commands as fly
 from multiprocessing.pool import ThreadPool
+from multiprocessing import Process
 
 pool = ThreadPool(processes=2)
 
-def preview():
-    camera = cv2.VideoCapture(0)
-    while True:
-        (grabbed, frame) = camera.read()
-        if not grabbed:
-            break
-        cv2.imshow("Preview", frame)
-        key = cv2.waitKey(1) & 0xFF
-        # if the 'q' key is pressed, stop the loop
-        if key == ord("q"):
-            break
+def preview(camera):
+    exitProgram = False
+    (grabbed, frame) = camera.read()
+    if not grabbed:
+            return
+    cv2.imshow("Preview", frame)
+    key = cv2.waitKey(1) & 0xFF
+    # if the 'q' key is pressed, stop the loop
+    if key == ord("q"):
+        exitProgram = True
+    return exitProgram
 
 def flyDrone(found):
-    if found == True:
-        return True
+    if found == False:
+        fly.up
     else:
-        return False
+        fly.land
 
 def detectImage(camera, found):
     # grab the current frame and initialize the status text
     (grabbed, frame) = camera.read()
-    status = "No Targets"
     found = False
     # check to see if we have reached the end of the video
     if not grabbed:
@@ -66,7 +66,6 @@ def detectImage(camera, found):
             if keepDims and keepSolidity and keepAspectRatio:
                 # draw an outline around the target and update the status text
                 cv2.drawContours(frame, [approx], -1, (0, 0, 255), 4)
-                status = "Target(s) Acquired"
                 found = True
                  # compute the center of the contour region and draw the crosshairs
                 M = cv2.moments(approx)
@@ -79,15 +78,15 @@ if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
     logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
     found = False
+    exitProgram = False
     camera = cv2.VideoCapture(0)
-    # fly.takeoff()
-    # preview()
-    while True:
+    fly.takeoff()
+    while exitProgram == False:
+        exitProgram = preview(camera)
         print("Flying...")
         async_detect = pool.apply_async(detectImage,(camera,found))
         rv = async_detect.get()
-        print("Found:", found)
-
+        print("Found:", rv)
         async_fly = pool.apply_async(flyDrone,(rv,))
         found = async_fly.get()
     print("Stopped...")
