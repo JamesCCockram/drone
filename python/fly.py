@@ -80,8 +80,8 @@ if __name__ == "__main__":
     found = False
     rv = False
     exitProgram = False
-    camera = cv2.VideoCapture(0)
-    fly.takeoff()
+    camera = cv2.VideoCapture('tcp://192.168.1.1:5555')
+    #fly.takeoff()
     while rv == False:
         print("Flying...")
         async_detect = pool.apply_async(detectImage,(camera,found))
