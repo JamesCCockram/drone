@@ -26,9 +26,9 @@ def preview(camera):
 
 def flyDrone(found):
     if found == False:
-        fly.up
+        fly.up()
     else:
-        fly.land
+        fly.land()
 
 def detectImage(camera, found):
     # grab the current frame and initialize the status text
@@ -78,15 +78,16 @@ if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
     logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
     found = False
+    rv = False
     exitProgram = False
     camera = cv2.VideoCapture(0)
     fly.takeoff()
-    while exitProgram == False:
-        exitProgram = preview(camera)
+    while rv == False:
         print("Flying...")
         async_detect = pool.apply_async(detectImage,(camera,found))
         rv = async_detect.get()
         print("Found:", rv)
         async_fly = pool.apply_async(flyDrone,(rv,))
         found = async_fly.get()
+        exitProgram = preview(camera)
     print("Stopped...")
