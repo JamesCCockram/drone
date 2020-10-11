@@ -60,7 +60,7 @@ def findSquare():
 		# if the 'q' key is pressed, stop the loop
 		if key == ord("q"):
 			break
-
+	
 
 	# cleanup the camera and close any open windows
 	camera.release()

@@ -7,6 +7,7 @@ import cv2
 import imutils
 import random
 import commands as fly
+import math
 from multiprocessing.pool import ThreadPool
 from multiprocessing import Process
 
@@ -73,6 +74,18 @@ def detectImage(camera, found):
                 (cX, cY) = (int(M["m10"] // M["m00"]), int(M["m01"] // M["m00"]))
                 print(cX, cY)
     return found
+
+def calculateDistance(cX, cY):
+    width = camera.get(cv2.CAP_PROP_FRAME_WIDTH)
+    height = camera.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    width / 2, height / 2
+    dX == cX - width / 2
+    dY == cY - height / 2
+    dist == sqrt((dX * dX) + (dY * dY))
+    return (dX, dY, dist)
+
+#Using the function
+#(dX, dY, dist) = calculateDistance(cX, cY)
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
