@@ -73,7 +73,6 @@ def detectImage(camera, found):
                 M = cv2.moments(approx)
                 #Center of object
                 (cX, cY) = (int(M["m10"] // M["m00"]), int(M["m01"] // M["m00"]))
-                print(cX, cY)
     return (found, cX, cY)
 
 def calculateDistance(cX, cY):
@@ -84,9 +83,6 @@ def calculateDistance(cX, cY):
     dY = cY - height / 2
     dist = math.sqrt((dX * dX) + (dY * dY))
     return (dX, dY, dist)
-
-#Using the function
-#(dX, dY, dist) = calculateDistance(cX, cY)
 
 if __name__ == "__main__":
     format = "%(asctime)s: %(message)s"
@@ -102,7 +98,6 @@ if __name__ == "__main__":
         rv = async_detect.get()
         print("Found:", rv)
         dist = calculateDistance(rv[1], rv[2])
-        print(dist[2])
         async_fly = pool.apply_async(flyDrone,(rv,))
         found = async_fly.get()
         exitProgram = preview(camera)
