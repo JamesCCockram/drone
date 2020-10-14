@@ -31,16 +31,20 @@ def flyDrone(cX, cY):
     height = camera.get(cv2.CAP_PROP_FRAME_HEIGHT)
     #first quadrant   
     if cX < width/2 and cY < height/2:
-        print(1)
+        if dist != 0:
+            fly.right()
     #second quadrant
     elif cX > width/2 and cY < height/2:
-        print(2)
+        if dist != 0:
+            fly.left()
     #third quadrant
     elif cX < width/2 and cY > height/2:
-        print(3)
+        if dist != 0:
+            fly.right()
     #fourth quadrant
     elif cX > width/2 and cY > height/2:
-        print(4)
+        if dist != 0:
+            fly.left()
 
 def detectImage(camera, found):
     (cX, cY) = (0,0)
