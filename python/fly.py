@@ -79,9 +79,9 @@ def calculateDistance(cX, cY):
     width = camera.get(cv2.CAP_PROP_FRAME_WIDTH)
     height = camera.get(cv2.CAP_PROP_FRAME_HEIGHT)
     width / 2, height / 2
-    dX == cX - width / 2
-    dY == cY - height / 2
-    dist == sqrt((dX * dX) + (dY * dY))
+    dX = cX - width / 2
+    dY = cY - height / 2
+    dist = math.sqrt((dX * dX) + (dY * dY))
     return (dX, dY, dist)
 
 #Using the function
