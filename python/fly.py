@@ -25,26 +25,43 @@ def preview(camera):
         exitProgram = True
     return exitProgram
 
-def flyDrone(cX, cY):
+def flyDrone(found, cX, cY):
     dist = calculateDistance(cX, cY)
     width = camera.get(cv2.CAP_PROP_FRAME_WIDTH)
     height = camera.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    #first quadrant   
-    if cX < width/2 and cY < height/2:
-        if dist != 0:
+    if dist[2] != 0 and found == False:
+        fly.up()    
+    elif dist[2] != 0 and found == True:
+        #first quadrant   
+        if cX < width/2 and cY < height/2:
             fly.right()
-    #second quadrant
-    elif cX > width/2 and cY < height/2:
-        if dist != 0:
+            fly.down()
+        #second quadrant
+        elif cX > width/2 and cY < height/2:
             fly.left()
-    #third quadrant
-    elif cX < width/2 and cY > height/2:
-        if dist != 0:
+            fly.down()
+        #third quadrant
+        elif cX < width/2 and cY > height/2:
             fly.right()
-    #fourth quadrant
-    elif cX > width/2 and cY > height/2:
-        if dist != 0:
+            fly.up()
+        #fourth quadrant
+        elif cX > width/2 and cY > height/2:
             fly.left()
+            fly.up()
+
+        elif cX <= width/2 and cY == height/2:
+            fly.right()
+
+        elif cX >= width/2 and cY == height/2:
+            fly.left()
+
+        elif cX == width/2 and cY <= height/2:
+            fly.down()
+
+        elif cX == width/2 and cY >= height/2:
+            fly.up()
+    else:
+        print("Test")
 
 def detectImage(camera, found):
     (cX, cY) = (0,0)
@@ -105,15 +122,16 @@ if __name__ == "__main__":
     found = False
     rv = False
     exitProgram = False
-    camera = cv2.VideoCapture(0)
-    #fly.takeoff()
+    camera = cv2.VideoCapture('tcp://192.168.1.1:5555')
+    fly.takeoff()
     while exitProgram == False:
+        exitProgram = preview(camera)
         print("Flying...")
         async_detect = pool.apply_async(detectImage,(camera,found))
         rv = async_detect.get()
         print("Found:", rv)
         dist = calculateDistance(rv[1], rv[2])
-        async_fly = pool.apply_async(flyDrone,(rv[1], rv[2]))
+        async_fly = pool.apply_async(flyDrone,(rv[0], rv[1], rv[2]))
         found = async_fly.get()
-        exitProgram = preview(camera)
+    fly.land()    
     print("Stopped...")
