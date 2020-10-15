@@ -125,7 +125,6 @@ if __name__ == "__main__":
     camera = cv2.VideoCapture('tcp://192.168.1.1:5555')
     fly.takeoff()
     while exitProgram == False:
-        exitProgram = preview(camera)
         print("Flying...")
         async_detect = pool.apply_async(detectImage,(camera,found))
         rv = async_detect.get()
@@ -133,5 +132,6 @@ if __name__ == "__main__":
         dist = calculateDistance(rv[1], rv[2])
         async_fly = pool.apply_async(flyDrone,(rv[0], rv[1], rv[2]))
         found = async_fly.get()
+        exitProgram = preview(camera)
     fly.land()    
     print("Stopped...")
