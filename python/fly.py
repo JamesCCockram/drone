@@ -13,6 +13,7 @@ from multiprocessing import Process
 
 pool = ThreadPool(processes=2)
 
+# create camera window
 def preview(camera):
     exitProgram = False
     (grabbed, frame) = camera.read()
@@ -25,6 +26,7 @@ def preview(camera):
         exitProgram = True
     return exitProgram
 
+# fly to the target
 def flyDrone(found, cX, cY):
     dist = calculateDistance(cX, cY)
     width = camera.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -63,6 +65,7 @@ def flyDrone(found, cX, cY):
     else:
         print("Test")
 
+# locate the target image
 def detectImage(camera, found):
     (cX, cY) = (0,0)
     # grab the current frame and initialize the status text
@@ -101,18 +104,22 @@ def detectImage(camera, found):
                 # draw an outline around the target and update the status text
                 cv2.drawContours(frame, [approx], -1, (0, 0, 255), 4)
                 found = True
-                 # compute the center of the contour region and draw the crosshairs
+                # compute the center of the contour region and draw the crosshairs
                 M = cv2.moments(approx)
-                #Center of object
+                # center of object
                 (cX, cY) = (int(M["m10"] // M["m00"]), int(M["m01"] // M["m00"]))
     return (found, cX, cY)
 
+# calculate the coordinates of the target
 def calculateDistance(cX, cY):
+    # get width and height of camera
     width = camera.get(cv2.CAP_PROP_FRAME_WIDTH)
     height = camera.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    # find center of camera
     width / 2, height / 2
     dX = cX - width / 2
     dY = cY - height / 2
+    # find distance
     dist = math.sqrt((dX * dX) + (dY * dY))
     return (dX, dY, dist)
 
