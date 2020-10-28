@@ -19,37 +19,37 @@ app.get('/land', function(req, res){
 
 //Make drone go left
 app.get('/left', function(req, res){
-  client.left(1)
+  client.left(0.25)
   res.send('Drone is moving to the left')
 })
 
 //Make drone go right
 app.get('/right', function(req, res){
-  client.right(1)
+  client.right(0.25)
   res.send('Drone is moving to the right')
 })
 
 //Make drone go forward
 app.get('/forward', function(req, res){
-  client.front(1)
+  client.front(0.25)
   res.send('Drone is moving forward')
 })
 
 //Make drone go back
 app.get('/back', function(req, res){
-  client.back(1)
+  client.back(0.25)
   res.send('Drone is moving back')
 })
 
 //Make drone go up
 app.get('/up', function(req, res){
-  client.up(1)
+  client.up(0.25)
   res.send('Drone is going up')
 })
 
 //Make drone go down
 app.get('/down', function(req, res){
-  client.down(1)
+  client.down(0.25)
   res.send('Drone is going down')
 })
 
